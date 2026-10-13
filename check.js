@@ -1,0 +1,57 @@
+// Виконати у консолі браузера після відкриття сторінки.
+(() => {
+  function check(value, message) {
+    if (!value) throw new Error(message);
+  }
+  const $ = (selector) => document.querySelector(selector);
+  const count = () => $('#teacher-list').children.length;
+  const total = count();
+  check(total > 0, 'No teachers');
+  check($('#statistics-body').rows.length === total, 'Missing statistics');
+  const name = $('#teacher-list .teacher-name').textContent;
+  $('#search').value = name;
+  $('#search').dispatchEvent(new Event('input'));
+  check(count() === 1, 'Name search');
+  $('#teacher-list .teacher-open').click();
+  check($('#info-dialog').open && $('#profile-name').textContent === name, 'Teacher popup');
+  const favoriteCount = $('#favorites-list').children.length;
+  const wasFavorite = $('#profile-favorite').getAttribute('aria-pressed') === 'true';
+  $('#profile-favorite').click();
+  check($('#favorites-list').children.length === favoriteCount + (wasFavorite ? -1 : 1), 'Favorite');
+  $('#profile-favorite').click();
+  $('#info-dialog .close-dialog').click();
+  check(!$('#info-dialog').open, 'Close popup');
+  $('#search').value = '';
+  $('#search').dispatchEvent(new Event('input'));
+  $('#only-favorites').checked = true;
+  $('#filters').dispatchEvent(new Event('change'));
+  check(count() === favoriteCount, 'Favorites filter');
+  $('#filters').reset();
+  $('#sex').value = 'female';
+  $('#filters').dispatchEvent(new Event('change'));
+  check(count() > 0 && count() < total, 'Gender filter');
+  $('#filters').reset();
+  $('#filters').dispatchEvent(new Event('change'));
+  $('[data-sort="age"]').click();
+  const ages = [...$('#statistics-body').rows].map((row) => Number(row.cells[2].textContent));
+  check(ages.every((age, i) => i === 0 || age >= ages[i - 1]), 'Age sorting');
+  $('header .add-teacher').click();
+  check($('#add-dialog').open, 'Add popup');
+  const form = $('#teacher-form');
+  form.elements.name.value = '<b>Test Teacher</b>';
+  form.elements.email.value = 'test@example.com';
+  form.elements.sex.value = 'female';
+  form.elements.birth.value = '2000-01-01';
+  form.elements.notes.value = 'Test note';
+  form.requestSubmit();
+  check(count() === total + 1, 'Add teacher');
+  check(!$('#add-dialog').open, 'Close after adding');
+  check([...document.querySelectorAll('.teacher-name')].some((element) => element.textContent === '<b>Test Teacher</b>' && !element.querySelector('b')), 'Text must not become HTML');
+  $('#search').value = 'Test note';
+  $('#search').dispatchEvent(new Event('input'));
+  check(count() === 1, 'Note search');
+  $('#search').value = '';
+  $('#search').dispatchEvent(new Event('input'));
+  check(document.documentElement.scrollWidth <= innerWidth, 'Page overflow');
+  return 'OK';
+})();

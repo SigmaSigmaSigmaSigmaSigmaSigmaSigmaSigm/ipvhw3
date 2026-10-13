@@ -1,0 +1,28 @@
+Контрольні запитання. Лабораторна робота №3
+
+1. DOM — це дерево об'єктів HTML-документа.
+2. У DOM є елементи, текст і коментарі. Сам DOM також містить вузол документа.
+3. На сторінці видно вміст body. head, коментарі та елементи з display: none не відображаються.
+4. Для роботи з DOM використовується document.
+5. getElementById, querySelector, querySelectorAll, getElementsByClassName.
+6. querySelector повертає перший елемент або null. querySelectorAll повертає NodeList.
+7. document.createElement('div').
+8. innerHTML — HTML усередині елемента, outerHTML — разом із самим елементом. innerText — видимий текст.
+9. Викликати element.remove().
+10. Викликати element.cloneNode(true), щоб скопіювати елемент із дочірніми вузлами.
+11. Використати append, prepend або appendChild.
+12. input, change, focus, blur.
+13. click, dblclick, mousedown, mouseup, mousemove, mouseover, mouseout.
+14. Наприклад, click, input, change, submit, keydown, focus.
+15. Через addEventListener, властивість onclick або HTML-атрибут onclick.
+16. children містить дочірні елементи, childNodes — усі дочірні вузли.
+17. parentElement, nextElementSibling, previousElementSibling.
+18. Колекція не має всіх методів масиву. Перетворити можна через Array.from або spread.
+19. getComputedStyle повертає обчислені стилі. Змінити можна через style або classList.
+20. getAttribute, setAttribute, removeAttribute. Для data-атрибутів є dataset.
+21. Подія піднімається від елемента до його батьків. stopPropagation зупиняє вспливання.
+22. target — елемент, де виникла подія, currentTarget — елемент із поточним обробником.
+23. Через form.elements.
+24. На елементи, які можуть отримати фокус: поля, кнопки, посилання або елементи з tabindex.
+25. Кнопкою submit, клавішею Enter або через requestSubmit. Метод submit не запускає перевірку форми.
+26. У події submit викликати event.preventDefault().
